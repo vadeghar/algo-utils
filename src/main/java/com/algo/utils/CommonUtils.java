@@ -302,5 +302,55 @@ public class CommonUtils {
 		}
 		return null;
 	}
+	
+	
+	/**
+	 * NIFTY21NOV16800PE = 16800
+	 * @param tradingSymbol
+	 * @return
+	 */
+	public static String getAngelStrikePrice(String tradingSymbol) {
+		String strikePrice = tradingSymbol
+				.replace(getAngelSymbol(tradingSymbol), StringUtils.EMPTY)
+				.replace(getAngelExpiry(tradingSymbol), StringUtils.EMPTY)
+				.replace(Constants.CE, StringUtils.EMPTY)
+				.replace(Constants.PE, StringUtils.EMPTY);
+		return strikePrice;
+	}
+
+	/**
+	 * NIFTY21NOV16800PE = PE
+	 * @param tradingSymbol
+	 * @return
+	 */
+	public static String getAngelOptionType(String tradingSymbol) {
+//		String opstSymbol = tradingSymbol.substring(0, tradingSymbol.length() - 12);
+//		String opstExpiry = DateUtils.angelToOpstra.get(tradingSymbol.substring(opstSymbol.length(), tradingSymbol.length() - 7));
+//		String strikePrice = tradingSymbol.replace(opstSymbol, StringUtils.EMPTY).replace(opstExpiry, StringUtils.EMPTY).replace(Constants.CE, StringUtils.EMPTY).replace(Constants.PE, StringUtils.EMPTY);
+//		String optionType = tradingSymbol.replace(opstSymbol, StringUtils.EMPTY).replace(opstExpiry, StringUtils.EMPTY).replace(strikePrice, StringUtils.EMPTY);
+//		return optionType;
+		return null;
+	}
+
+	/**
+	 * NIFTY21NOV16800PE = NIFTY
+	 * @param tradingSymbol
+	 * @return
+	 */
+	public static String getAngelSymbol(String tradingSymbol) {
+		String opstSymbol = tradingSymbol.substring(0, tradingSymbol.length() - 12);
+		return opstSymbol;
+	}
+
+	/**
+	 * NIFTY21NOV16800PE = 21NOV/21N03/21N18
+	 * @param tradingSymbol
+	 * @return
+	 */
+	public static String getAngelExpiry(String tradingSymbol) {
+		String opstSymbol = tradingSymbol.substring(0, tradingSymbol.length() - 12);
+		String opstExpiry = tradingSymbol.substring(opstSymbol.length(), tradingSymbol.length() - 7);
+		return opstExpiry;
+	}
 
 }

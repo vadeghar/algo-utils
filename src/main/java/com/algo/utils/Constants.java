@@ -6,7 +6,7 @@ public class Constants {
 	
 	public static final String PE = "PE";
 	public static final String CE = "CE";
-	
+	public static final String NSE = "NSE";
 	public static final String OPST_EXPIRY_FORMAT = "ddMMMyyyy";
 	public static final String AGL_EXPIRY_FORMAT = "ddMMMyy"; //27JAN22
 	public static final String AGL_APPEND_TO_SCRIPT_FORMAT = "ddMMMyy";
