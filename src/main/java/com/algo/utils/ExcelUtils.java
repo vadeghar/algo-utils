@@ -224,7 +224,7 @@ public class ExcelUtils {
             Sheet sheet = wb.getSheetAt(0);
             int i = 0;
             for(Row r : sheet) {
-            	if(i == 0) {
+            	if(i < SHEET_TRADES_ROW_START_NO) {
             		i++;
             		continue;
             	}
@@ -383,7 +383,7 @@ public class ExcelUtils {
 			log.info("TOTAL ROWS FOUND "+noOfRows);
 			int noOfColumns = sheet.getRow(0).getLastCellNum();
 			log.info("Cell count iin first row: "+noOfColumns);
-			dataTable = new String[noOfRows][noOfColumns];
+			dataTable = new String[noOfRows][8];
 			for (int i = SHEET_TRADES_ROW_START_NO; i < noOfRows; i++) {
 			    Row row = sheet.getRow(i);
 			    noOfColumns = row.getLastCellNum();

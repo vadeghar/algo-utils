@@ -23,4 +23,6 @@ public class Constants {
 	public static final String MARKET = "MARKET";
 	public static final String BUY = "BUY";
 	public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00");
+	public static final String SHEET_SL_VAL = "B2";
+	public static final String SHEET_TARGET_VAL = "B1";
 }
