@@ -35,6 +35,7 @@ public class ExcelUtils {
 	
 	static Logger log = LoggerFactory.getLogger(ExcelUtils.class);
 	private static final int SHEET_TRADES_ROW_START_NO = 3; // 2 is an index, actual row number is 3
+	private static final int SHEET_HEADER_ROW_NO = 2; // 2 is an index, actual row number is 3
 	static String fileNamePrefix = "trades_";
 	static String ext = "xlsx";
 	
@@ -187,7 +188,7 @@ public class ExcelUtils {
             int rowCount = getLastRow(sheet);
             Row row = getRowBySymbol(sheet, (String)bookRow[0]);
             if(row == null) {
-            	row = sheet.createRow(rowCount+1);
+            	row = sheet.createRow(rowCount);
             }
             Cell cell;
             for(int i=0; i< bookRow.length; i++) {
@@ -279,7 +280,7 @@ public class ExcelUtils {
 		Object[] bookRow = {"Position","Qty", "Sell Price", "Buy Price", "Current Price", "P&L", "Ex Time", "Close Time"};
 				//prepareDataRow("Position","Qty", "Sell Price", "Buy Price", "Current Price", "P&L", "Trade Time");
 		CellStyle headerCellStyle = getHeaderCellStyle(sheet, wb);
-		Row row = sheet.createRow(SHEET_TRADES_ROW_START_NO);
+		Row row = sheet.createRow(SHEET_HEADER_ROW_NO);
 		Cell cell;
 		for(int i=0; i < bookRow.length; i++) {
 			if(i == 0)
