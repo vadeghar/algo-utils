@@ -36,6 +36,13 @@ public class ExcelUtils {
 	static Logger log = LoggerFactory.getLogger(ExcelUtils.class);
 	private static final int SHEET_TRADES_ROW_START_NO = 3; // 2 is an index, actual row number is 3
 	private static final int SHEET_HEADER_ROW_NO = 2; // 2 is an index, actual row number is 3
+	
+	public static final String SHEET_SL_VAL = "B2";
+	public static final String SHEET_TARGET_VAL = "B1";
+	public static final String SHEET_CE_SL_VAL = "F2";
+	public static final String SHEET_PE_SL_VAL = "H2";
+	public static final String SHEET_STRATEGY_NAME_VAL = "D1";
+	
 	static String fileNamePrefix = "trades_";
 	static String ext = "xlsx";
 	
@@ -284,9 +291,9 @@ public class ExcelUtils {
 		Cell cell;
 		for(int i=0; i < bookRow.length; i++) {
 			if(i == 0)
-				sheet.setColumnWidth(i, 25 * 256);
+				sheet.setColumnWidth(i, 35 * 256);
 			else
-				sheet.setColumnWidth(i, 15 * 256);
+				sheet.setColumnWidth(i, 20 * 256);
 			cell = row.createCell(i);
 			cell.setCellStyle(headerCellStyle);
 			cell.setCellValue((String) bookRow[i]);
@@ -296,8 +303,11 @@ public class ExcelUtils {
 		wb.close();
 		outputStream.close();
 		updateCellByRowAndCellNums(fileFullPath, 0, 0, "TARGET", true);
+		updateCellByRowAndCellNums(fileFullPath, 0, 2, "Strategy", true);
 		updateCellByRowAndCellNums(fileFullPath, 1, 0, "S/L Credit If", true);
 		updateCellByRowAndCellNums(fileFullPath, 1, 2, "Net P/L", true);
+		updateCellByRowAndCellNums(fileFullPath, 1, 4, "CE S/L", true);
+		updateCellByRowAndCellNums(fileFullPath, 1, 6, "PE S/L", true);
 	}
 
 	private static CellStyle getHeaderCellStyle(Sheet sheet, Workbook wb) {
@@ -440,6 +450,33 @@ public class ExcelUtils {
 				sheet.getRow(cellAddress.getRow()).createCell(cellAddress.getColumn());
 				updatedCell = sheet.getRow(cellAddress.getRow()).createCell(cellAddress.getColumn());
 			}
+			updatedCell.setCellValue(value);
+			inputStream.close();
+            FileOutputStream outputStream = new FileOutputStream(filePath);
+            wb.write(outputStream);
+			wb.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void setValueWithRedBgByCellReference(String filePath, String cellRef, String value) {
+		try {
+			FileInputStream inputStream = new FileInputStream(new File(filePath));
+			Workbook wb = WorkbookFactory.create(inputStream);
+			Sheet sheet = wb.getSheetAt(0);
+			CellStyle style = wb.createCellStyle(); 
+            style.setFillForegroundColor(IndexedColors.RED.getIndex());  
+            style.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+			
+			CellAddress cellAddress = new CellAddress(cellRef);
+			Cell updatedCell = sheet.getRow(cellAddress.getRow()).getCell(cellAddress.getColumn());
+			// if cell is null than create the cell
+			if(updatedCell == null){
+				sheet.getRow(cellAddress.getRow()).createCell(cellAddress.getColumn());
+				updatedCell = sheet.getRow(cellAddress.getRow()).createCell(cellAddress.getColumn());
+			}
+			updatedCell.setCellStyle(style); 
 			updatedCell.setCellValue(value);
 			inputStream.close();
             FileOutputStream outputStream = new FileOutputStream(filePath);

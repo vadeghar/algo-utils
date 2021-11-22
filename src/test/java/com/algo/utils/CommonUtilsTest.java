@@ -5,7 +5,6 @@ import java.awt.Toolkit;
 import org.junit.jupiter.api.Test;
 
 public class CommonUtilsTest {
-	@Test
 	public void beep() {
 		for(int i= 0; i<10;i++) {
 			try {
@@ -15,6 +14,11 @@ public class CommonUtilsTest {
 				e1.printStackTrace();
 			}
 		}
+	}
+	
+	@Test
+	public void getOpstraStrikePriceTest() {
+		System.out.println(CommonUtils.getOpstraSymbol("BANKNIFTY18NOV202118400CE"));
 	}
 
 }

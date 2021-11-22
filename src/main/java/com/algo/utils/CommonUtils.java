@@ -257,19 +257,7 @@ public class CommonUtils {
 		return opstExpiry;
 	}
 
-	/**
-	 * NIFTY21NOV16800PE = 16800 = NIFTY18NOV2118400CE
-	 * @param tradingSymbol
-	 * @return
-	 */
-	public static String getOpstraStrikePrice(String tradingSymbol) {
-		String strikePrice = tradingSymbol
-				.replace(getOpstraSymbol(tradingSymbol), StringUtils.EMPTY)
-				.replace(getOpstraExpiry(tradingSymbol), StringUtils.EMPTY)
-				.replace(getOpstraOptionType(tradingSymbol), StringUtils.EMPTY);
-		return strikePrice;
-	}
-
+	
 	/**
 	 * NIFTY21NOV16800PE = PE = NIFTY18NOV202118400CE = CE
 	 * @param tradingSymbol
@@ -278,26 +266,51 @@ public class CommonUtils {
 	public static String getOpstraOptionType(String tradingSymbol) {
 		return tradingSymbol.substring(tradingSymbol.length()-2);
 	}
-
+	
+	
 	/**
-	 * NIFTY21NOV16800PE = NIFTY = NIFTY18NOV202118400CE
+	 * NIFTY21NOV16800PE = 16800 = NIFTY18NOV2118400CE
 	 * @param tradingSymbol
 	 * @return
 	 */
-	public static String getOpstraSymbol(String tradingSymbol) {
-		String opstSymbol = tradingSymbol.substring(0, tradingSymbol.length() - 16);
-		return opstSymbol;
+	public static String getOpstraStrikePrice(String tradingSymbol) {
+		String optType = getOpstraOptionType(tradingSymbol);
+		tradingSymbol = tradingSymbol.replace(optType, StringUtils.EMPTY); // NIFTY18NOV2118400
+		String strikePrice = tradingSymbol.substring(tradingSymbol.length()-5);
+		return strikePrice;
 	}
-
+	
 	/**
 	 * NIFTY21NOV16800PE = 21NOV/21N03/21N18 = NIFTY18NOV202118400CE = 18NOV2021/25NOV2021
 	 * @param tradingSymbol
 	 * @return
 	 */
 	public static String getOpstraExpiry(String tradingSymbol) {
-		String opstExpiry = tradingSymbol.substring(getOpstraSymbol(tradingSymbol).length(), tradingSymbol.length() - 7);
+		tradingSymbol = tradingSymbol
+					.replace(getOpstraOptionType(tradingSymbol), StringUtils.EMPTY)
+					.replace(getOpstraStrikePrice(tradingSymbol), StringUtils.EMPTY); // NIFTY18NOV2021
+		String opstExpiry = tradingSymbol.substring(tradingSymbol.length() - 9);
 		return opstExpiry;
 	}
+	
+	/**
+	 * NIFTY21NOV16800PE = NIFTY = NIFTY18NOV202118400CE
+	 * @param tradingSymbol
+	 * @return
+	 */
+	public static String getOpstraSymbol(String tradingSymbol) {
+		tradingSymbol = tradingSymbol
+				.replace(getOpstraExpiry(tradingSymbol), StringUtils.EMPTY)
+				.replace(getOpstraOptionType(tradingSymbol), StringUtils.EMPTY)
+				.replace(getOpstraStrikePrice(tradingSymbol), StringUtils.EMPTY); // NIFTY18NOV2021
+		return tradingSymbol;
+	}
+	
+
+
+	
+
+	
 	
 	public static String getNearestTradingSymbolAtNPrice(Double priceNear, Map<String, LTPQuote> ltps, double d) {
 		for(Entry<String, LTPQuote> e: ltps.entrySet()) {
