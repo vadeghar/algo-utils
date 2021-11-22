@@ -435,22 +435,25 @@ public class ExcelUtils {
 		return cellVal;
 	}
 	
-	public static void setValueByCellReference(String filePath, String cellRef, String value) {
+	public static void setValueByCellReference(String filePath, String cellRef, Object value) {
 		try {
 			FileInputStream inputStream = new FileInputStream(new File(filePath));
 			Workbook wb = WorkbookFactory.create(inputStream);
 			Sheet sheet = wb.getSheetAt(0);
-			
-			
 			CellAddress cellAddress = new CellAddress(cellRef);
 			Cell updatedCell = sheet.getRow(cellAddress.getRow()).getCell(cellAddress.getColumn());
-
 			// if cell is null than create the cell
 			if(updatedCell == null){
 				sheet.getRow(cellAddress.getRow()).createCell(cellAddress.getColumn());
 				updatedCell = sheet.getRow(cellAddress.getRow()).createCell(cellAddress.getColumn());
 			}
-			updatedCell.setCellValue(value);
+			if(value instanceof String)
+				updatedCell.setCellValue((String) value);
+			else if(value instanceof Integer)
+				updatedCell.setCellValue((Integer)value);
+			else if(value instanceof Double) {
+				updatedCell.setCellValue((Double)value);
+			}
 			inputStream.close();
             FileOutputStream outputStream = new FileOutputStream(filePath);
             wb.write(outputStream);
