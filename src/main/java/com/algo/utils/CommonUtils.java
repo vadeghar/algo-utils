@@ -81,8 +81,8 @@ public class CommonUtils {
 	public static void addStopLossToSheet(MyPosition posToKeep, MyPosition posToOpen, String dataDir) {
 		String otherStrikePrice = posToKeep.getStrikePrice();
 		if(Integer.valueOf(posToOpen.getStrikePrice()) <= Integer.valueOf(otherStrikePrice)) {
-			System.out.println("\t\t\t** POSITION IS STRADDLE NOW, ADDING STOP LOSS **");
-			log.info("\t\t\t** POSITION IS STRADDLE NOW, ADDING STOP LOSS **");
+			System.out.println("\t\t\t** POSITION IS strangle NOW, ADDING STOP LOSS **");
+			log.info("\t\t\t** POSITION IS strangle NOW, ADDING STOP LOSS **");
 			Double totPrem = posToOpen.getCurrentPrice() + posToKeep.getCurrentPrice();
 			Double sl = totPrem + (totPrem * 0.1);
 			System.out.println("\t\t\tSTOP LOSS IS: "+sl);
@@ -181,6 +181,11 @@ public class CommonUtils {
 	 * @return
 	 */
 	public static double getPositionPnl(MyPosition p) {
+		if(p.getCurrentPrice() == null) {
+			log.info("No current price set on position, Might me an api probelm");
+			System.out.println("No current price set on position, Might me an api probelm");
+			return 0.0;
+		}
 		double lastPrice = p.getCurrentPrice();
 		double pnl = 0.0;
 		if(p.getNetQuantity() == 0) {
