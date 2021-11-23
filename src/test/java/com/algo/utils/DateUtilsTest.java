@@ -3,6 +3,8 @@ package com.algo.utils;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import org.junit.jupiter.api.Test;
+
 public class DateUtilsTest {
 
 	
@@ -42,6 +44,10 @@ public class DateUtilsTest {
 		String symbol = ts.substring(0, ts.length() - 12);
 		String expiry = ts.substring(symbol.length(), ts.length() - 7);
 		System.out.println("SYMBOL: "+symbol+ "\nEXIPRY: "+expiry );
+	}
+	@Test
+	public void getCurrentExpiryTest() {
+		System.out.println("NEXT EXPIRY: "+DateUtils.getCurrentExpiry());
 	}
 	
 //	KiteUtils ts = new KiteUtils();

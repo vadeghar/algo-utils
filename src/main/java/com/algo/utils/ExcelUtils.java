@@ -188,6 +188,7 @@ public class ExcelUtils {
 	 * @param bookData
 	 */
 	public static void addOrUpdateRow(String fileFullPath, Object[] bookRow) {
+		log.info("addOrUpdateRow>");
 		try {
 			FileInputStream inputStream = new FileInputStream(new File(fileFullPath));
             Workbook wb = WorkbookFactory.create(inputStream);
@@ -219,6 +220,7 @@ public class ExcelUtils {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		log.info("<addOrUpdateRow");
 	}
 	
 	/**
@@ -376,7 +378,7 @@ public class ExcelUtils {
 	
 	public static void updateNetPnl(Workbook wb, Sheet sheet) {
 		Cell formulaCell = sheet.getRow(1).createCell(3);
-		formulaCell.setCellFormula("SUM(F2:F1000)");
+		formulaCell.setCellFormula("SUM(F4:F1000)");
 		FormulaEvaluator formulaEvaluator = 
 				  wb.getCreationHelper().createFormulaEvaluator();
 				formulaEvaluator.evaluate(formulaCell);

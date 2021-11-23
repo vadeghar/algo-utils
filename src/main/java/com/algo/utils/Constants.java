@@ -25,4 +25,6 @@ public class Constants {
 	public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00");
 	public static final String SHEET_SL_VAL = "B2";
 	public static final String SHEET_TARGET_VAL = "B1";
+	public static final String INTRADAY_STRADDLE_START = "10:00";
+	public static final String INTRADAY_STRADDLE_END = "15:00";
 }

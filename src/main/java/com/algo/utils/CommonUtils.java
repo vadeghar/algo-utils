@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.algo.model.LTPQuote;
+import com.algo.model.AlogLtpData;
 import com.algo.model.MyPosition;
 
 
@@ -256,7 +256,20 @@ public class CommonUtils {
 		String opstExpiry = tradingSymbol.substring(opstSymbol.length(), tradingSymbol.length() - 7);
 		return opstExpiry;
 	}
-
+	//BANKNIFTY02DEC202137100PE = 02DEC2021
+	public static  String getSpecialExpiry(String tradingSymbol) {
+		String strikeOptType = tradingSymbol.substring(tradingSymbol.length() - 7); // 37100PE
+		tradingSymbol = tradingSymbol.replace(strikeOptType, StringUtils.EMPTY); // BANKNIFTY02DEC2021
+		String exp = tradingSymbol.substring(tradingSymbol.length() - 9); // 02DEC2021
+		String symbol = tradingSymbol.replace(exp, StringUtils.EMPTY); // BANKNIFTY
+		
+		String year = exp.substring(exp.length() - 4); // 2021
+		String dayMonth = exp.replace(year, StringUtils.EMPTY);
+		String day = dayMonth.substring(0, 2);
+		String mnth = dayMonth.substring(2);
+		year = year.substring(2);
+		return year+mnth.charAt(0)+day;
+	}
 	
 	/**
 	 * NIFTY21NOV16800PE = PE = NIFTY18NOV202118400CE = CE
@@ -306,15 +319,10 @@ public class CommonUtils {
 		return tradingSymbol;
 	}
 	
-
-
 	
-
-	
-	
-	public static String getNearestTradingSymbolAtNPrice(Double priceNear, Map<String, LTPQuote> ltps, double d) {
-		for(Entry<String, LTPQuote> e: ltps.entrySet()) {
-			if(e.getValue().lastPrice >= (priceNear-d) && e.getValue().lastPrice <= (priceNear+d)) {
+	public static String getNearestTradingSymbolAtNPrice(Double priceNear, Map<String, AlogLtpData> ltps, double d) {
+		for(Entry<String, AlogLtpData> e: ltps.entrySet()) {
+			if(e.getValue().getLastPrice() >= (priceNear-d) && e.getValue().getLastPrice() <= (priceNear+d)) {
 				return e.getKey();
 			}
 		}

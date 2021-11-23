@@ -18,7 +18,7 @@ public class CommonUtilsTest {
 	
 	@Test
 	public void getOpstraStrikePriceTest() {
-		System.out.println(CommonUtils.getOpstraSymbol("BANKNIFTY18NOV202118400CE"));
+		System.out.println(CommonUtils.getSpecialExpiry("BANKNIFTY18NOV202118400CE"));
 	}
 
 }
