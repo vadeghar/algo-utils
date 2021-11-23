@@ -47,7 +47,7 @@ public class DateUtilsTest {
 	}
 	@Test
 	public void getCurrentExpiryTest() {
-		System.out.println("NEXT EXPIRY: "+DateUtils.getCurrentExpiry());
+		System.out.println("NEXT EXPIRY: "+DateUtils.isMonthlyExpiry(DateUtils.getCurrentExpiry()));
 	}
 	
 //	KiteUtils ts = new KiteUtils();

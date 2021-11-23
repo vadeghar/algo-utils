@@ -257,7 +257,7 @@ public class CommonUtils {
 		return opstExpiry;
 	}
 	//BANKNIFTY02DEC202137100PE = 02DEC2021
-	public static  String getSpecialExpiry(String tradingSymbol) {
+	public static  String getSpecialExpiry(String tradingSymbol, boolean isMonthly) {
 		String strikeOptType = tradingSymbol.substring(tradingSymbol.length() - 7); // 37100PE
 		tradingSymbol = tradingSymbol.replace(strikeOptType, StringUtils.EMPTY); // BANKNIFTY02DEC2021
 		String exp = tradingSymbol.substring(tradingSymbol.length() - 9); // 02DEC2021
@@ -268,6 +268,8 @@ public class CommonUtils {
 		String day = dayMonth.substring(0, 2);
 		String mnth = dayMonth.substring(2);
 		year = year.substring(2);
+		if(isMonthly)
+			return year+mnth;
 		return year+mnth.charAt(0)+day;
 	}
 	

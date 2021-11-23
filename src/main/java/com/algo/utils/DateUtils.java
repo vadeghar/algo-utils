@@ -1,8 +1,10 @@
 package com.algo.utils;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,5 +81,13 @@ public class DateUtils {
 	
 	public static LocalDate getCurrentExpiry() {
 		return expiryDateList.stream().filter(exDate -> exDate.isAfter(LocalDate.now())).findFirst().get();
+	}
+	
+	public static boolean isMonthlyExpiry(LocalDate curExpiryDay) {
+		//LocalDate end = localDate.withDayOfMonth(localDate.lengthOfMonth());
+//		LocalDate lastDayOfMonth  = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
+		LocalDate lastThursdayInMonth = LocalDate.now().with(TemporalAdjusters.lastInMonth(DayOfWeek.THURSDAY));
+		//LocalDate nextExpDay = curExpiryDay.with(TemporalAdjusters.next(DayOfWeek.THURSDAY));
+		return (curExpiryDay.isEqual(lastThursdayInMonth));
 	}
 }
